@@ -8,6 +8,7 @@ plugins {
     id 'signing'
     id 'de.marcphilipp.nexus-publish' version '0.4.0'
     id 'name.remal.check-updates' version '1.1.4'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 apply plugin: 'idea' // IntelliJ plugin to see files generated from protos
@@ -201,3 +202,11 @@ nexusPublishing {
         }
     }
 }
+
+shadowJar {
+   relocate('com.google.protobuf', 'shaded.com.google.protobuf')
+   relocate('io.grpc', 'shaded.io.grpc')
+   archiveClassifier.set('shaded')
+   mergeServiceFiles()
+}
+
